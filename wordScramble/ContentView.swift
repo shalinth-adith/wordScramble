@@ -36,7 +36,13 @@ struct ContentView: View {
             .onAppear(perform:startGame)
             .alert(errorTitle , isPresented: $showingError){ } message: {
                 Text(errorMessage)
-            
+            }
+            .toolbar {
+                Button {
+                            restartGame()
+                }label:{
+                    Label("Restart" , systemImage: "arrow.clockwise.circle.fill")
+                }
                 
             }
         }
@@ -75,7 +81,7 @@ struct ContentView: View {
                 return
             }
         }
-
+        
         fatalError("Could not load start.txt from bundle.")
     }
     func isOrginal(word: String) -> Bool{
@@ -107,9 +113,15 @@ struct ContentView: View {
         errorMessage = message
         showingError = true
     }
-    
+    func restartGame(){
+        withAnimation{
+            usedWords.removeAll()
+            newWord = ""
+            startGame()
+        }
+        
+    }
 }
-
 
 
 
